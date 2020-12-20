@@ -21,7 +21,7 @@ namespace BuildersExchangeProject.Models
             public int URL_ID { get; set; }
      
             [Key]
-            public int CUSTOMER_ID { get; set; }
+            public int USER_ID { get; set; }
         }
         public class CATEGORIES
         {
