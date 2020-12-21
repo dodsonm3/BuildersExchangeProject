@@ -12,16 +12,12 @@ namespace BuildersExchangeProject.Models
         {
             [Key]
             public int Cat_ID { get; set; }
-            [Key]
-            public int URL_ID { get; set; }
+            public LINK URL_ID { get; set; }
         }
         public class ASSIGNEDUSER
         {
-            [Key]
-            public int URL_ID { get; set; }
-     
-            [Key]
-            public int USER_ID { get; set; }
+            public LINK URL_ID { get; set; }
+            public ApplicationUser USER_ID { get; set; }
         }
         public class CATEGORIES
         {
@@ -42,8 +38,7 @@ namespace BuildersExchangeProject.Models
             [Key]
             public int URL_ID { get; set; }
             public string URL { get; set; }
-            [Key]
-            public int FILTER_ID { get; set; }
+            public FILTER FILTER_ID { get; set; }
         }
         public class LINKDATA
         {
@@ -51,7 +46,7 @@ namespace BuildersExchangeProject.Models
             public int STATIC_LINK_ID { get; set; }
             public string LinkMD5 { get; set; }
             [Key]
-            public int URL_ID { get; set; }
+           public LINK URL_ID { get; set; }
         }
         
     }
