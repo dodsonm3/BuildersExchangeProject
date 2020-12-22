@@ -13,7 +13,8 @@ namespace BuildersExchangeProject.Controllers
     public class LINKsController : Controller
     {
         private SANDEntities db = new SANDEntities();
-
+        
+        
         // GET: LINKs
         public ActionResult Index()
         {

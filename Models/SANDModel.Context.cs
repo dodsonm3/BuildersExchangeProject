@@ -18,6 +18,7 @@ namespace BuildersExchangeProject.Models
         public SANDEntities()
             : base("name=SANDEntities")
         {
+           
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
