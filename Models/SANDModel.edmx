@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SANDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ASSIGNEDCAT">
+          <Key>
+            <PropertyRef Name="CAT_ID" />
+            <PropertyRef Name="URL_ID" />
+          </Key>
+          <Property Name="CAT_ID" Type="int" Nullable="false" />
+          <Property Name="URL_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASSIGNEDUSER">
+          <Key>
+            <PropertyRef Name="URL_ID" />
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="URL_ID" Type="int" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIES">
+          <Key>
+            <PropertyRef Name="CAT_ID" />
+          </Key>
+          <Property Name="CAT_ID" Type="int" Nullable="false" />
+          <Property Name="CAT_NAME" Type="char" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="FILTER">
+          <Key>
+            <PropertyRef Name="FILTER_ID" />
+          </Key>
+          <Property Name="FILTER_ID" Type="int" Nullable="false" />
+          <Property Name="FILTER_NAME" Type="char" MaxLength="100" />
+          <Property Name="FILTER_OBJ" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="LINK">
+          <Key>
+            <PropertyRef Name="URL_ID" />
+          </Key>
+          <Property Name="URL_ID" Type="int" Nullable="false" />
+          <Property Name="URL" Type="char" MaxLength="150" />
+          <Property Name="FILTER_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="LINKDATA">
+          <Key>
+            <PropertyRef Name="STATIC_LINK_ID" />
+          </Key>
+          <Property Name="STATIC_LINK_ID" Type="int" Nullable="false" />
+          <Property Name="LINKMD5" Type="char" MaxLength="150" />
+          <Property Name="URL_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="EMAIL" Type="char" MaxLength="50" />
+          <Property Name="FIRST_NAME" Type="char" MaxLength="100" />
+          <Property Name="LAST_NAME" Type="char" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ASSIGNEDCAT_CAT_ID">
+          <End Role="CATEGORIES" Type="Self.CATEGORIES" Multiplicity="1" />
+          <End Role="ASSIGNEDCAT" Type="Self.ASSIGNEDCAT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIES">
+              <PropertyRef Name="CAT_ID" />
+            </Principal>
+            <Dependent Role="ASSIGNEDCAT">
+              <PropertyRef Name="CAT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSIGNEDCAT_URL_ID">
+          <End Role="LINK" Type="Self.LINK" Multiplicity="1" />
+          <End Role="ASSIGNEDCAT" Type="Self.ASSIGNEDCAT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LINK">
+              <PropertyRef Name="URL_ID" />
+            </Principal>
+            <Dependent Role="ASSIGNEDCAT">
+              <PropertyRef Name="URL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSIGNEDUSER_CUSTOMER_ID">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="ASSIGNEDUSER" Type="Self.ASSIGNEDUSER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="ASSIGNEDUSER">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSIGNEDUSER_URL_ID">
+          <End Role="LINK" Type="Self.LINK" Multiplicity="1" />
+          <End Role="ASSIGNEDUSER" Type="Self.ASSIGNEDUSER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LINK">
+              <PropertyRef Name="URL_ID" />
+            </Principal>
+            <Dependent Role="ASSIGNEDUSER">
+              <PropertyRef Name="URL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LINK_FILTER_ID">
+          <End Role="FILTER" Type="Self.FILTER" Multiplicity="0..1" />
+          <End Role="LINK" Type="Self.LINK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILTER">
+              <PropertyRef Name="FILTER_ID" />
+            </Principal>
+            <Dependent Role="LINK">
+              <PropertyRef Name="FILTER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LINKDATA_URL_ID">
+          <End Role="LINK" Type="Self.LINK" Multiplicity="0..1" />
+          <End Role="LINKDATA" Type="Self.LINKDATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LINK">
+              <PropertyRef Name="URL_ID" />
+            </Principal>
+            <Dependent Role="LINKDATA">
+              <PropertyRef Name="URL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SANDModelStoreContainer">
+          <EntitySet Name="ASSIGNEDCAT" EntityType="Self.ASSIGNEDCAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSIGNEDUSER" EntityType="Self.ASSIGNEDUSER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIES" EntityType="Self.CATEGORIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FILTER" EntityType="Self.FILTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LINK" EntityType="Self.LINK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LINKDATA" EntityType="Self.LINKDATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ASSIGNEDCAT_CAT_ID" Association="Self.FK_ASSIGNEDCAT_CAT_ID">
+            <End Role="CATEGORIES" EntitySet="CATEGORIES" />
+            <End Role="ASSIGNEDCAT" EntitySet="ASSIGNEDCAT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSIGNEDCAT_URL_ID" Association="Self.FK_ASSIGNEDCAT_URL_ID">
+            <End Role="LINK" EntitySet="LINK" />
+            <End Role="ASSIGNEDCAT" EntitySet="ASSIGNEDCAT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSIGNEDUSER_CUSTOMER_ID" Association="Self.FK_ASSIGNEDUSER_CUSTOMER_ID">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ASSIGNEDUSER" EntitySet="ASSIGNEDUSER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSIGNEDUSER_URL_ID" Association="Self.FK_ASSIGNEDUSER_URL_ID">
+            <End Role="LINK" EntitySet="LINK" />
+            <End Role="ASSIGNEDUSER" EntitySet="ASSIGNEDUSER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LINK_FILTER_ID" Association="Self.FK_LINK_FILTER_ID">
+            <End Role="FILTER" EntitySet="FILTER" />
+            <End Role="LINK" EntitySet="LINK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LINKDATA_URL_ID" Association="Self.FK_LINKDATA_URL_ID">
+            <End Role="LINK" EntitySet="LINK" />
+            <End Role="LINKDATA" EntitySet="LINKDATA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SANDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="CAT_ID" />
+          </Key>
+          <Property Name="CAT_ID" Type="Int32" Nullable="false" />
+          <Property Name="CAT_NAME" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="LINKs" Relationship="Self.ASSIGNEDCAT" FromRole="CATEGORIES" ToRole="LINK" />
+        </EntityType>
+        <EntityType Name="FILTER">
+          <Key>
+            <PropertyRef Name="FILTER_ID" />
+          </Key>
+          <Property Name="FILTER_ID" Type="Int32" Nullable="false" />
+          <Property Name="FILTER_NAME" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="FILTER_OBJ" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LINKs" Relationship="Self.FK_LINK_FILTER_ID" FromRole="FILTER" ToRole="LINK" />
+        </EntityType>
+        <EntityType Name="LINK">
+          <Key>
+            <PropertyRef Name="URL_ID" />
+          </Key>
+          <Property Name="URL_ID" Type="Int32" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="150" FixedLength="true" Unicode="false" />
+          <Property Name="FILTER_ID" Type="Int32" />
+          <NavigationProperty Name="FILTER" Relationship="Self.FK_LINK_FILTER_ID" FromRole="LINK" ToRole="FILTER" />
+          <NavigationProperty Name="LINKDATAs" Relationship="Self.FK_LINKDATA_URL_ID" FromRole="LINK" ToRole="LINKDATA" />
+          <NavigationProperty Name="CATEGORIES" Relationship="Self.ASSIGNEDCAT" FromRole="LINK" ToRole="CATEGORIES" />
+          <NavigationProperty Name="USERS" Relationship="Self.ASSIGNEDUSER" FromRole="LINK" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="LINKDATA">
+          <Key>
+            <PropertyRef Name="STATIC_LINK_ID" />
+          </Key>
+          <Property Name="STATIC_LINK_ID" Type="Int32" Nullable="false" />
+          <Property Name="LINKMD5" Type="String" MaxLength="150" FixedLength="true" Unicode="false" />
+          <Property Name="URL_ID" Type="Int32" />
+          <NavigationProperty Name="LINK" Relationship="Self.FK_LINKDATA_URL_ID" FromRole="LINKDATA" ToRole="LINK" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="LINKs" Relationship="Self.ASSIGNEDUSER" FromRole="USERS" ToRole="LINK" />
+        </EntityType>
+        <Association Name="FK_LINK_FILTER_ID">
+          <End Role="FILTER" Type="Self.FILTER" Multiplicity="0..1" />
+          <End Role="LINK" Type="Self.LINK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILTER">
+              <PropertyRef Name="FILTER_ID" />
+            </Principal>
+            <Dependent Role="LINK">
+              <PropertyRef Name="FILTER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LINKDATA_URL_ID">
+          <End Role="LINK" Type="Self.LINK" Multiplicity="0..1" />
+          <End Role="LINKDATA" Type="Self.LINKDATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LINK">
+              <PropertyRef Name="URL_ID" />
+            </Principal>
+            <Dependent Role="LINKDATA">
+              <PropertyRef Name="URL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ASSIGNEDCAT">
+          <End Role="CATEGORIES" Type="SANDModel.CATEGORY" Multiplicity="*" />
+          <End Role="LINK" Type="Self.LINK" Multiplicity="*" />
+        </Association>
+        <Association Name="ASSIGNEDUSER">
+          <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+          <End Role="LINK" Type="Self.LINK" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SANDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CATEGORIES" EntityType="SANDModel.CATEGORY" />
+          <EntitySet Name="FILTERs" EntityType="Self.FILTER" />
+          <EntitySet Name="LINKs" EntityType="Self.LINK" />
+          <EntitySet Name="LINKDATAs" EntityType="Self.LINKDATA" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <AssociationSet Name="FK_LINK_FILTER_ID" Association="Self.FK_LINK_FILTER_ID">
+            <End Role="FILTER" EntitySet="FILTERs" />
+            <End Role="LINK" EntitySet="LINKs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LINKDATA_URL_ID" Association="Self.FK_LINKDATA_URL_ID">
+            <End Role="LINK" EntitySet="LINKs" />
+            <End Role="LINKDATA" EntitySet="LINKDATAs" />
+          </AssociationSet>
+          <AssociationSet Name="ASSIGNEDCAT" Association="Self.ASSIGNEDCAT">
+            <End Role="CATEGORIES" EntitySet="CATEGORIES" />
+            <End Role="LINK" EntitySet="LINKs" />
+          </AssociationSet>
+          <AssociationSet Name="ASSIGNEDUSER" Association="Self.ASSIGNEDUSER">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LINK" EntitySet="LINKs" />
+          </AssociationSet>
+          <EntitySet Name="database_firewall_rules" EntityType="SANDModel.database_firewall_rules" />
+        </EntityContainer>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SANDModelStoreContainer" CdmEntityContainer="SANDEntities">
+          <EntitySetMapping Name="CATEGORIES">
+            <EntityTypeMapping TypeName="SANDModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORIES">
+                <ScalarProperty Name="CAT_ID" ColumnName="CAT_ID" />
+                <ScalarProperty Name="CAT_NAME" ColumnName="CAT_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FILTERs">
+            <EntityTypeMapping TypeName="SANDModel.FILTER">
+              <MappingFragment StoreEntitySet="FILTER">
+                <ScalarProperty Name="FILTER_ID" ColumnName="FILTER_ID" />
+                <ScalarProperty Name="FILTER_NAME" ColumnName="FILTER_NAME" />
+                <ScalarProperty Name="FILTER_OBJ" ColumnName="FILTER_OBJ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LINKs">
+            <EntityTypeMapping TypeName="SANDModel.LINK">
+              <MappingFragment StoreEntitySet="LINK">
+                <ScalarProperty Name="URL_ID" ColumnName="URL_ID" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="FILTER_ID" ColumnName="FILTER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LINKDATAs">
+            <EntityTypeMapping TypeName="SANDModel.LINKDATA">
+              <MappingFragment StoreEntitySet="LINKDATA">
+                <ScalarProperty Name="STATIC_LINK_ID" ColumnName="STATIC_LINK_ID" />
+                <ScalarProperty Name="LINKMD5" ColumnName="LINKMD5" />
+                <ScalarProperty Name="URL_ID" ColumnName="URL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="SANDModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ASSIGNEDCAT" TypeName="SANDModel.ASSIGNEDCAT" StoreEntitySet="ASSIGNEDCAT">
+            <EndProperty Name="CATEGORIES">
+              <ScalarProperty Name="CAT_ID" ColumnName="CAT_ID" />
+            </EndProperty>
+            <EndProperty Name="LINK">
+              <ScalarProperty Name="URL_ID" ColumnName="URL_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ASSIGNEDUSER" TypeName="SANDModel.ASSIGNEDUSER" StoreEntitySet="ASSIGNEDUSER">
+            <EndProperty Name="USERS">
+              <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+            </EndProperty>
+            <EndProperty Name="LINK">
+              <ScalarProperty Name="URL_ID" ColumnName="URL_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="SANDModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
