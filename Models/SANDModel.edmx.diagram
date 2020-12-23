@@ -15,6 +15,8 @@
         <AssociationConnector Association="SANDModel.ASSIGNEDCAT" ManuallyRouted="false" />
         <AssociationConnector Association="SANDModel.ASSIGNEDUSER" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SANDModel.database_firewall_rules" Width="1.5" PointX="3.375" PointY="5.75" />
+        <EntityTypeShape EntityType="SANDModel.CUSTOMER" Width="1.5" PointX="5.375" PointY="4.875" />
+        <AssociationConnector Association="SANDModel.ASSIGNEDUSER1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

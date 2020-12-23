@@ -18,7 +18,6 @@ namespace BuildersExchangeProject.Models
         public SANDEntities()
             : base("name=SANDEntities")
         {
-           
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -32,5 +31,6 @@ namespace BuildersExchangeProject.Models
         public virtual DbSet<LINKDATA> LINKDATAs { get; set; }
         public virtual DbSet<USER> USERS { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<CUSTOMER> CUSTOMERs { get; set; }
     }
 }

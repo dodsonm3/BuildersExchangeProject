@@ -16,23 +16,32 @@
         <EntityType Name="ASSIGNEDUSER">
           <Key>
             <PropertyRef Name="URL_ID" />
-            <PropertyRef Name="USER_ID" />
+            <PropertyRef Name="CUSTOMER_ID" />
           </Key>
           <Property Name="URL_ID" Type="int" Nullable="false" />
-          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="CUSTOMER_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CATEGORIES">
           <Key>
             <PropertyRef Name="CAT_ID" />
           </Key>
-          <Property Name="CAT_ID" Type="int" Nullable="false" />
+          <Property Name="CAT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CAT_NAME" Type="char" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTOMER_ID" />
+          </Key>
+          <Property Name="CUSTOMER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="FIRST_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="LAST_NAME" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FILTER">
           <Key>
             <PropertyRef Name="FILTER_ID" />
           </Key>
-          <Property Name="FILTER_ID" Type="int" Nullable="false" />
+          <Property Name="FILTER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FILTER_NAME" Type="char" MaxLength="100" />
           <Property Name="FILTER_OBJ" Type="varchar" MaxLength="255" />
         </EntityType>
@@ -40,26 +49,17 @@
           <Key>
             <PropertyRef Name="URL_ID" />
           </Key>
-          <Property Name="URL_ID" Type="int" Nullable="false" />
-          <Property Name="URL" Type="char" MaxLength="150" />
+          <Property Name="URL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="URL" Type="varchar" MaxLength="150" />
           <Property Name="FILTER_ID" Type="int" />
         </EntityType>
         <EntityType Name="LINKDATA">
           <Key>
             <PropertyRef Name="STATIC_LINK_ID" />
           </Key>
-          <Property Name="STATIC_LINK_ID" Type="int" Nullable="false" />
-          <Property Name="LINKMD5" Type="char" MaxLength="150" />
+          <Property Name="STATIC_LINK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LINKMD5" Type="varchar" MaxLength="150" />
           <Property Name="URL_ID" Type="int" />
-        </EntityType>
-        <EntityType Name="USERS">
-          <Key>
-            <PropertyRef Name="USER_ID" />
-          </Key>
-          <Property Name="USER_ID" Type="int" Nullable="false" />
-          <Property Name="EMAIL" Type="char" MaxLength="50" />
-          <Property Name="FIRST_NAME" Type="char" MaxLength="100" />
-          <Property Name="LAST_NAME" Type="char" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -104,14 +104,14 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ASSIGNEDUSER_CUSTOMER_ID">
-          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
           <End Role="ASSIGNEDUSER" Type="Self.ASSIGNEDUSER" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_ID" />
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CUSTOMER_ID" />
             </Principal>
             <Dependent Role="ASSIGNEDUSER">
-              <PropertyRef Name="USER_ID" />
+              <PropertyRef Name="CUSTOMER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,10 +155,10 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
           <EntitySet Name="ASSIGNEDCAT" EntityType="Self.ASSIGNEDCAT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSIGNEDUSER" EntityType="Self.ASSIGNEDUSER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIES" EntityType="Self.CATEGORIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FILTER" EntityType="Self.FILTER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LINK" EntityType="Self.LINK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LINKDATA" EntityType="Self.LINKDATA" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
     [database_firewall_rules].[id] AS [id], 
@@ -178,7 +178,7 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
             <End Role="ASSIGNEDCAT" EntitySet="ASSIGNEDCAT" />
           </AssociationSet>
           <AssociationSet Name="FK_ASSIGNEDUSER_CUSTOMER_ID" Association="Self.FK_ASSIGNEDUSER_CUSTOMER_ID">
-            <End Role="USERS" EntitySet="USERS" />
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
             <End Role="ASSIGNEDUSER" EntitySet="ASSIGNEDUSER" />
           </AssociationSet>
           <AssociationSet Name="FK_ASSIGNEDUSER_URL_ID" Association="Self.FK_ASSIGNEDUSER_URL_ID">
@@ -220,19 +220,20 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
             <PropertyRef Name="URL_ID" />
           </Key>
           <Property Name="URL_ID" Type="Int32" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="150" FixedLength="true" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="FILTER_ID" Type="Int32" />
           <NavigationProperty Name="FILTER" Relationship="Self.FK_LINK_FILTER_ID" FromRole="LINK" ToRole="FILTER" />
           <NavigationProperty Name="LINKDATAs" Relationship="Self.FK_LINKDATA_URL_ID" FromRole="LINK" ToRole="LINKDATA" />
           <NavigationProperty Name="CATEGORIES" Relationship="Self.ASSIGNEDCAT" FromRole="LINK" ToRole="CATEGORIES" />
           <NavigationProperty Name="USERS" Relationship="Self.ASSIGNEDUSER" FromRole="LINK" ToRole="USERS" />
+          <NavigationProperty Name="CUSTOMERs" Relationship="SANDModel.ASSIGNEDUSER1" FromRole="LINK" ToRole="CUSTOMER" />
         </EntityType>
         <EntityType Name="LINKDATA">
           <Key>
             <PropertyRef Name="STATIC_LINK_ID" />
           </Key>
           <Property Name="STATIC_LINK_ID" Type="Int32" Nullable="false" />
-          <Property Name="LINKMD5" Type="String" MaxLength="150" FixedLength="true" Unicode="false" />
+          <Property Name="LINKMD5" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="URL_ID" Type="Int32" />
           <NavigationProperty Name="LINK" Relationship="Self.FK_LINKDATA_URL_ID" FromRole="LINKDATA" ToRole="LINK" />
         </EntityType>
@@ -301,6 +302,11 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
             <End Role="LINK" EntitySet="LINKs" />
           </AssociationSet>
           <EntitySet Name="database_firewall_rules" EntityType="SANDModel.database_firewall_rules" />
+          <EntitySet Name="CUSTOMERs" EntityType="SANDModel.CUSTOMER" />
+          <AssociationSet Name="ASSIGNEDUSER1" Association="SANDModel.ASSIGNEDUSER1">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="LINK" EntitySet="LINKs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -318,6 +324,20 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTOMER_ID" />
+          </Key>
+          <Property Name="CUSTOMER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LINKs" Relationship="SANDModel.ASSIGNEDUSER1" FromRole="CUSTOMER" ToRole="LINK" />
+        </EntityType>
+        <Association Name="ASSIGNEDUSER1">
+          <End Type="SANDModel.CUSTOMER" Role="CUSTOMER" Multiplicity="*" />
+          <End Type="SANDModel.LINK" Role="LINK" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -359,16 +379,6 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USERS">
-            <EntityTypeMapping TypeName="SANDModel.USER">
-              <MappingFragment StoreEntitySet="USERS">
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
-                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="ASSIGNEDCAT" TypeName="SANDModel.ASSIGNEDCAT" StoreEntitySet="ASSIGNEDCAT">
             <EndProperty Name="CATEGORIES">
               <ScalarProperty Name="CAT_ID" ColumnName="CAT_ID" />
@@ -378,9 +388,6 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="ASSIGNEDUSER" TypeName="SANDModel.ASSIGNEDUSER" StoreEntitySet="ASSIGNEDUSER">
-            <EndProperty Name="USERS">
-              <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-            </EndProperty>
             <EndProperty Name="LINK">
               <ScalarProperty Name="URL_ID" ColumnName="URL_ID" />
             </EndProperty>
@@ -397,6 +404,24 @@ warning 6002: The table/view 'SAND.sys.database_firewall_rules' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERs">
+            <EntityTypeMapping TypeName="SANDModel.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="CUSTOMER_ID" ColumnName="CUSTOMER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ASSIGNEDUSER1" TypeName="SANDModel.ASSIGNEDUSER1" StoreEntitySet="ASSIGNEDUSER">
+            <EndProperty Name="LINK">
+              <ScalarProperty Name="URL_ID" ColumnName="URL_ID" />
+            </EndProperty>
+            <EndProperty Name="CUSTOMER">
+              <ScalarProperty Name="CUSTOMER_ID" ColumnName="CUSTOMER_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
