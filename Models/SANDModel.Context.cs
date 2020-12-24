@@ -29,8 +29,7 @@ namespace BuildersExchangeProject.Models
         public virtual DbSet<FILTER> FILTERs { get; set; }
         public virtual DbSet<LINK> LINKs { get; set; }
         public virtual DbSet<LINKDATA> LINKDATAs { get; set; }
-        public virtual DbSet<USER> USERS { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
-        public virtual DbSet<CUSTOMER> CUSTOMERs { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

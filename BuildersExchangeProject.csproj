@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LINKsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -209,7 +210,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SANDModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\USER.cs">
+    <Compile Include="Models\User.cs">
       <DependentUpon>SANDModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -288,6 +289,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\LINKs\Create.cshtml" />
+    <Content Include="Views\LINKs\Delete.cshtml" />
+    <Content Include="Views\LINKs\Details.cshtml" />
+    <Content Include="Views\LINKs\Edit.cshtml" />
+    <Content Include="Views\LINKs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,21 +17,23 @@ namespace BuildersExchangeProject.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LINK()
         {
+            this.CUSTOMERs = new HashSet<User>();
             this.LINKDATAs = new HashSet<LINKDATA>();
             this.CATEGORIES = new HashSet<CATEGORY>();
-            this.USERS = new HashSet<USER>();
         }
     
         public int URL_ID { get; set; }
         public string URL { get; set; }
         public Nullable<int> FILTER_ID { get; set; }
+        public Nullable<int> CUSTOMER_ID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> CUSTOMERs { get; set; }
         public virtual FILTER FILTER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LINKDATA> LINKDATAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CATEGORY> CATEGORIES { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER> USERS { get; set; }
+        public virtual User CUSTOMER { get; set; }
     }
 }

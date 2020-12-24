@@ -9,14 +9,13 @@
         <EntityTypeShape EntityType="SANDModel.FILTER" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SANDModel.LINK" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="SANDModel.LINKDATA" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SANDModel.USER" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
         <AssociationConnector Association="SANDModel.FK_LINK_FILTER_ID" ManuallyRouted="false" />
         <AssociationConnector Association="SANDModel.FK_LINKDATA_URL_ID" ManuallyRouted="false" />
         <AssociationConnector Association="SANDModel.ASSIGNEDCAT" ManuallyRouted="false" />
-        <AssociationConnector Association="SANDModel.ASSIGNEDUSER" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SANDModel.database_firewall_rules" Width="1.5" PointX="3.375" PointY="5.75" />
-        <EntityTypeShape EntityType="SANDModel.CUSTOMER" Width="1.5" PointX="5.375" PointY="4.875" />
+        <EntityTypeShape EntityType="SANDModel.User" Width="1.5" PointX="5.375" PointY="4.875" />
         <AssociationConnector Association="SANDModel.ASSIGNEDUSER1" />
+        <AssociationConnector Association="SANDModel.FK__LINK__CUSTOMER_I__40058253" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

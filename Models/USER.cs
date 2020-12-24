@@ -12,20 +12,24 @@ namespace BuildersExchangeProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USER
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USER()
+        public User()
         {
             this.LINKs = new HashSet<LINK>();
+            this.LINKs1 = new HashSet<LINK>();
         }
     
         public int USER_ID { get; set; }
         public string EMAIL { get; set; }
         public string FIRST_NAME { get; set; }
         public string LAST_NAME { get; set; }
+        public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LINK> LINKs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LINK> LINKs1 { get; set; }
     }
 }
