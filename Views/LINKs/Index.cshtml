@@ -18,6 +18,9 @@
        <th>
             Assigned To
        </th>
+       <th>
+           Category Type
+       </th>
         <th></th>
     </tr>
 
@@ -27,10 +30,10 @@
             @Html.DisplayFor(modelItem => item.URL)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FILTER.FILTER_NAME)
+            @Html.DisplayFor(modelItem => item.CUSTOMERs)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CUSTOMERs)
+            
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.URL_ID }) |
