@@ -1,4 +1,5 @@
 ﻿@model BuildersExchangeProject.Models.LINK
+@using BuildersExchangeProject.Models
 
 @{
     ViewBag.Title = "Details";
@@ -13,17 +14,20 @@
         <dt>
             @Html.DisplayNameFor(model => model.URL)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.URL)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.FILTER.FILTER_NAME)
+            Assigned To
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.FILTER.FILTER_NAME)
+            @Html.DisplayFor(model => model.CUSTOMER)
+        </dd>
+        <dt>
+            Category
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CATEGORIES)
         </dd>
 
     </dl>

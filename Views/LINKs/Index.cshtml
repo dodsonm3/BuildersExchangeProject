@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<BuildersExchangeProject.Models.LINK>
+@using BuildersExchangeProject.Models;
 
 @{
     ViewBag.Title = "Index";
@@ -19,7 +20,7 @@
             Assigned To
        </th>
        <th>
-           Category Type
+           Category
        </th>
         <th></th>
     </tr>
@@ -33,7 +34,7 @@
             @Html.DisplayFor(modelItem => item.CUSTOMERs)
         </td>
         <td>
-            
+            @Html.DisplayFor(ModelItem => item.CATEGORIES)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.URL_ID }) |

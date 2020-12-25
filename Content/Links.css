@@ -1,0 +1,92 @@
+﻿
+/* Jack Paulson
+   12/17/2020, Dr. Kinuthia, ISYS 489
+   A css file to style the new category page of website
+*/
+
+/* remove space on top of nav bar */
+body {
+    margin: 0;
+    background-color: #e6fdfb;
+    color: black
+}
+
+/* Style the top navigation bar */
+.navigation {
+    background-color: #3f49d4;
+    width: 100%;
+    padding: 0;
+    overflow: auto
+}
+
+/* Styles the table */
+table, th, td {
+    border: 1px solid black;
+    empty-cells: show;
+    width: 50%;
+    text-align: center;
+}
+
+    /* blank
+{
+	tr:hover {background-color:#f5f5f5;}
+} */
+
+    table.outside {
+        border: 0px solid;
+        width: 100%;
+        text-align: left;
+    }
+
+        table.outside td {
+            border: 0px solid;
+            width: 100%;
+            text-align: left;
+        }
+
+    table.inside {
+        border: 1px solid black;
+        width: 400px;
+        text-align: left;
+        background-color: white;
+    }
+
+        table.inside td {
+            border: 1px solid black;
+            width: 400px;
+            ;
+            text-align: left;
+        }
+
+
+
+/* Style the links to the other pages in the nav bar*/
+.navigation a {
+    float: left;
+    margin: auto;
+    height: 40px;
+    width: 14.53%;
+    text-align: center;
+    vertical-align: top;
+    color: white;
+    padding: 1%;
+    font-size: 18px;
+    text-decoration: none;
+    border: 1px solid black
+}
+    /* .center 
+	{
+		margin: auto;
+		width: 50%;
+	} */
+
+    /* Add styles to the links using pseudo elements */
+    .navigation a:hover {
+        background-color: #7884ee;
+        color: white
+    }
+
+    .navigation a:active {
+        background-color: #7884ee;
+        color: black
+    }
